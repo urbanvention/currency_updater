@@ -5,6 +5,7 @@ GEM
     autotest-fsevent (0.2.3)
       sys-uname
     diff-lcs (1.1.2)
+    iso_country_codes (0.2.2)
     rspec (2.1.0)
       rspec-core (~> 2.1.0)
       rspec-expectations (~> 2.1.0)
@@ -21,7 +22,5 @@ PLATFORMS
 DEPENDENCIES
   autotest
   autotest-fsevent
+  iso_country_codes
   rspec
-
-METADATA
-  version: 1.0.6

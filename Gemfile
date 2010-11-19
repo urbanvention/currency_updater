@@ -1,4 +1,5 @@
-source "http://rubygems.org"
+source :rubygems
 gem "rspec"
 gem "autotest"
-gem "autotest-fsevent"
+gem "autotest-fsevent" if RUBY_PLATFORM =~ /darwin/
+gem "iso_country_codes"
