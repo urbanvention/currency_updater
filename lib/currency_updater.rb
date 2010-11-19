@@ -13,6 +13,13 @@ class CurrencyUpdater
     end
   end
 
+  def codes
+    result = IsoCountryCodes.all
+    result = result.map(&:currency).sort
+    result.delete("EUR")
+    result
+  end
+
   def method_missing(method,*args,&block)
     return from_currencies(method,*args,&block) if @currencies.respond_to?(method)
     super

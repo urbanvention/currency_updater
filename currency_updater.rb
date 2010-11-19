@@ -16,6 +16,7 @@ current = File.dirname(__FILE__)
 lib     = File.expand_path(File.join(current, 'lib'))
 $LOAD_PATH << current << lib
 
+require 'iso_country_codes'
 require 'currency'
 require 'currencies'
 require 'currency_updater'

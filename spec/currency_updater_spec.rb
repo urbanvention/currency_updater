@@ -17,6 +17,14 @@ describe "CurrencyUpdater" do
     @cu.currencies.usd.should be_instance_of(Currency)
   end
 
+  it "should include USD" do
+    @cu.codes.should include("USD")
+  end
+
+  it "should not include EUR" do
+    @cu.codes.should_not include("EUR")
+  end
+
   describe "currency updates" do
     before :each do
       @cu.usd.rate = 1.0000
