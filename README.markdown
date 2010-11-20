@@ -73,6 +73,17 @@ Some currency rates are not available today. You could try to update them anyhow
     # the other currencies are not supported because of google
     
     UNSUPPORTED = %w(EUR TRY AFN ALL AMD AOA AZN BAM BIF BMD BSD BTN CDF CUP ETB FIM FKP GEL GNF GYD IMP JEP KGS KMF LRD LSL LYD MGA MMK MNT MRO MZN SBD SHP SOS STD TJS TMM TOP TVD VUV WST ZWD)
+    
+## Configure the updater
+
+You are able to override the rate_finder behavior for your needs.
+In case you'd like to find the rates in another way, you can change the rate finder simply like that:
+
+    # config/initializers/currency_updater.rb
+    
+    CurrencyUpdater.setup do |config|
+      config.rate_finder = lambda {|currency| 1.2345 }
+    end
 
 ## Changelog
 
