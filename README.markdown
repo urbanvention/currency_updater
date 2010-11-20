@@ -19,19 +19,28 @@ With bundler:
     
 ## Usage
 
+You have to include the CurrencyUpdater module. Here is a silly example:
+
+    class DollarTodayController < ApplicationController
+      include CurrencyUpdater
+      def index
+        @currencies = Updater.new("USD")
+      end
+    end
+
 ### Fetching Currencies
 
 In order to fetch all currencies defined by ISO 4217:
 
-    currencies = CurrencyUpdater.new
+    currencies = Updater.new
 
 or to fetch only one currency:
 
-    currencies = CurrencyUpdater.new(USD)
+    currencies = Updater.new("USD")
     
 or to fetch some currencies:
 
-    currencies = CurrencyUpdater.new([USD,GBP,RUB])
+    currencies = Updater.new(["USD","GBP","RUB"])
     
 ### Accessing a currency
 
@@ -55,6 +64,7 @@ Have a look at the remote specs to get an idea how the output looks like:
 
 ## Changelog
 
+* Add all dependencies specefied in Gemfile (1.0.2)
 * 2010-11-20: Update Gemspec dependencies (1.0.1)
 * 2010-11-19: Initial commit (1.0.0)
 
