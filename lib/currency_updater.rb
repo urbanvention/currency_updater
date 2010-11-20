@@ -1,52 +1,67 @@
+require 'ruby-debug'
 class CurrencyUpdater
-  def initialize
-    @currencies = Currencies.new
-  end
+  class << self
+    def select_country_codes(currency)
+      @@currency_codes = if currency.nil?
+                           Currencies.all_codes
+                         else
+                           Array.new([currency]).flatten
+                         end
+      initialize_currencies
+      update_currencies
+    end
 
-  def currencies
-    @currencies
-  end
+    # TODO maybe delete all codes first?
+    def initialize_currencies
+      @@currency_codes.each do |currency|
+        Currencies.add(currency)
+      end
+    end
 
-  def currencies=(a)
-    a.each do |currency|
-      @currencies.add(currency)
+    def update_currencies
+      currencies = Currencies.all
+      currencies.each do |currency|
+        begin
+          rate = search_rate_for(currency.code)
+          currency.rate = rate
+          #       rescue Exception
+          #         error("currency #{currency.code} has not been updated!")
+        end
+      end
+    end
+
+    def search_rate_for(currency)
+      raise "invalid currency" unless currency
+      client = Net::HTTP.new("www.google.de")
+      resp = client.get("/search?hl=de&q=1+EUR+to+#{currency}&btnG=Suche&meta=") || raise("no connection available")
+      text_only = resp.body.gsub(/<[^>]*>/, "")
+      match = text_only.match(/1\s+Euro\s+=\s+([0-9\.]*)/mix)
+      rate = if match
+               match[1]
+             else
+               warn "currency #{currency} is unsupported"
+               "1.00"
+             end
+      rate.gsub!(/\s+/, "").to_f
     end
   end
-
-  def codes
-    result = IsoCountryCodes.all
-    result = result.map(&:currency).sort
-    result.delete("EUR")
-    result
+  #----------------------------------------------------------------------#
+  # instance methods
+  #----------------------------------------------------------------------#
+  def initialize(currency = nil)
+    @currencies = Currencies.new
+    CurrencyUpdater.select_country_codes(currency)
   end
 
   def method_missing(method,*args,&block)
-    return from_currencies(method,*args,&block) if @currencies.respond_to?(method)
-    super
-  end
-
-  def from_currencies(method,*args,&block)
-    @currencies.send(method,*args,&block)
-  end
-
-  def start
-    @currencies.all.each do |currency|
-      begin
-        rate = search_rate_for(currency.code)
-        currency.rate = rate
-      rescue Exception
-        error("currency #{currency.code} has not been updated!")
-      end
+    if @currencies.respond_to?(method)
+      @currencies.send(method,*args,&block)
+    else
+      super
     end
   end
 
-  def search_rate_for(currency)
-    client = Net::HTTP.new("www.google.de")
-    resp = client.get("/search?hl=de&q=1+EUR+to+#{currency}&btnG=Suche&meta=")
-    rate = resp.body.gsub(/<[^>]*>/, "").match(/1\s+Euro\s+=\s+([0-9\s\.]*)/mix)[1]
-    rate.gsub!(/\s+/, "").to_f
-  end
-
+  private
   def error(msg)
     puts msg
   end

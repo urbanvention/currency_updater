@@ -1,12 +1,20 @@
 require File.join(File.dirname(__FILE__), 'spec_helper.rb')
 
-describe "CurrencyUpdater" do
+describe CurrencyUpdater do
 
-  describe "Fetching currencies" do
+  describe "Fetching all currencies" do
 
     before :all do
+      def CurrencyUpdater.search_rate_for(foo)
+        return 1.3333
+      end
+
       @cu = CurrencyUpdater.new
-      @codes = @cu.codes
+      @codes = Currencies.all_codes
+    end
+
+    it "should not include all" do
+      @codes.should_not include("all")
     end
 
     it "should fetch all currencies defined by ISO 4217" do
@@ -39,38 +47,51 @@ describe "CurrencyUpdater" do
     end
   end
 
-  before :each do
-    @cu = CurrencyUpdater.new
-    @cu.currencies = ["USD"]
-  end
-  it "should add the currencies" do
-    @cu.currencies.should include("usd")
-  end
-
-  it "should let usd respond to rate" do
-    @cu.currencies.usd.should respond_to(:rate)
-  end
-
-  it "should be istance of Currency" do
-    @cu.currencies.usd.should be_instance_of(Currency)
-  end
-
-  it "should include USD" do
-    @cu.codes.should include("USD")
-  end
-
-  it "should not include EUR" do
-    @cu.codes.should_not include("EUR")
-  end
-
-  describe "currency updates" do
-    before :each do
-      @cu.usd.rate = 1.0000
+  describe "Fetching only USD" do
+    before :all do
+      @cu = CurrencyUpdater.new("USD")
+      @codes = ["USD"]
     end
 
-    it "should update the rate" do
-      @cu.start
-      @cu.usd.rate.should_not == 1.0000
+    it "should respond to usd" do
+      currency = @cu.usd
+      currency.rate.should_not == 1.000
+      currency.code.should == "USD"
     end
   end
+
+  #   before :each do
+  #     @cu = CurrencyUpdater.new
+  #     @cu.currencies = ["USD"]
+  #   end
+  #   it "should add the currencies" do
+  #     @cu.currencies.should include("usd")
+  #   end
+
+  #   it "should let usd respond to rate" do
+  #     @cu.currencies.usd.should respond_to(:rate)
+  #   end
+
+  #   it "should be istance of Currency" do
+  #     @cu.currencies.usd.should be_instance_of(Currency)
+  #   end
+
+  #   it "should include USD" do
+  #     @cu.codes.should include("USD")
+  #   end
+
+  #   it "should not include EUR" do
+  #     @cu.codes.should_not include("EUR")
+  #   end
+
+  #   describe "currency updates" do
+  #     before :each do
+  #       @cu.usd.rate = 1.0000
+  #     end
+
+  #     it "should update the rate" do
+  #       @cu.start
+  #       @cu.usd.rate.should_not == 1.0000
+  #     end
+  #   end
 end
