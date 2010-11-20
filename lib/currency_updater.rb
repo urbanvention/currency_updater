@@ -1,4 +1,3 @@
-require 'ruby-debug'
 class CurrencyUpdater
   class << self
     def select_country_codes(currency)
@@ -11,8 +10,8 @@ class CurrencyUpdater
       update_currencies
     end
 
-    # TODO maybe delete all codes first?
     def initialize_currencies
+      Currencies.clear
       @@currency_codes.each do |currency|
         Currencies.add(currency)
       end
@@ -21,12 +20,8 @@ class CurrencyUpdater
     def update_currencies
       currencies = Currencies.all
       currencies.each do |currency|
-        begin
-          rate = search_rate_for(currency.code)
-          currency.rate = rate
-          #       rescue Exception
-          #         error("currency #{currency.code} has not been updated!")
-        end
+        rate = search_rate_for(currency.code)
+        currency.rate = rate
       end
     end
 
@@ -35,7 +30,7 @@ class CurrencyUpdater
       client = Net::HTTP.new("www.google.de")
       resp = client.get("/search?hl=de&q=1+EUR+to+#{currency}&btnG=Suche&meta=") || raise("no connection available")
       text_only = resp.body.gsub(/<[^>]*>/, "")
-      match = text_only.match(/1\s+Euro\s+=\s+([0-9\.]*)/mix)
+      match = text_only.match(/1\s+Euro\s+=\s+([0-9\.\s]*)/mix)
       rate = if match
                match[1]
              else
@@ -61,8 +56,15 @@ class CurrencyUpdater
     end
   end
 
-  private
-  def error(msg)
-    puts msg
+  def to_json
+    @currencies.to_json
+  end
+
+  def to_xml
+    @currencies.to_xml
+  end
+
+  def to_yaml
+    @currencies.to_yaml
   end
 end

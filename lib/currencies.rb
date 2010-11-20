@@ -25,6 +25,9 @@ class Currencies
       @@currencies = {}
     end
 
+    # for better guessing
+    alias_method :clear, :delete
+
     def all_codes
       result = IsoCountryCodes.all.map(&:currency).sort
       result = result - UNSUPPORTED
@@ -41,4 +44,27 @@ class Currencies
       UNSUPPORTED.include?(currency)
     end
   end
+
+  def to_json
+    @@currencies.to_json
+  end
+
+  def to_xml
+    xml = Builder::XmlMarkup.new(:indent=>2)
+    xml.instruct! :xml, :version=>"1.0", :encoding=>"UTF-8"
+    xml.currencies do
+      @@currencies.values.each do |currency|
+        xml.currency(:name => currency.currency) do
+          xml.code(currency.code)
+          xml.rate(currency.rate)
+        end
+      end
+    end
+    xml.target!
+  end
+
+  def to_yaml
+    @@currencies.to_yaml
+  end
+
 end

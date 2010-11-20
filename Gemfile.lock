@@ -5,6 +5,7 @@ GEM
     autotest (4.4.4)
     autotest-fsevent (0.2.3)
       sys-uname
+    builder (3.0.0)
     columnize (0.3.2)
     diff-lcs (1.1.2)
     i18n (0.4.2)
@@ -33,6 +34,7 @@ GEM
     ruby_core_source (0.1.4)
       archive-tar-minitar (>= 0.5.2)
     sys-uname (0.8.4)
+    yajl-ruby (0.7.8)
 
 PLATFORMS
   ruby
@@ -40,8 +42,10 @@ PLATFORMS
 DEPENDENCIES
   autotest
   autotest-fsevent
+  builder
   i18n
   iso_country_codes
   mocha
   rspec
   ruby-debug19
+  yajl-ruby

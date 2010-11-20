@@ -19,5 +19,10 @@ describe Currencies do
     it "should have no values initially" do
       Currencies.all.should == []
     end
+
+    it "should have an xml output" do
+      Currencies.add("USD")
+      Currencies.new.to_xml.should == "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<currencies>\n  <currency name=\"usd\">\n    <code>USD</code>\n    <rate>1.0</rate>\n  </currency>\n</currencies>\n"
+    end
   end
 end

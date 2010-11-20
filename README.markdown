@@ -41,16 +41,17 @@ To access the currency rate, code or name:
     currencies.usd.code # => "USD"
     currencies.usd.name # => I18n.t('currency.usd')
     
-### Accessing all currencies
+### Output currencies
 
 You're able to convert the currencies into different formats:
 
     currencies.to_json
     currencies.to_yaml
     currencies.to_xml
-    currencies.to_csv
 
-Have a look at the `examples` folder for sample outputs.
+Have a look at the remote specs to get an idea how the output looks like:
+
+    ruby remote_spec/remote_spec.rb
 
 ## Changelog
 
