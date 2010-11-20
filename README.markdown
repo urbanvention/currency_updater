@@ -55,7 +55,8 @@ Have a look at the remote specs to get an idea how the output looks like:
 
 ## Changelog
 
-* 2010-11-19: Initial commit
+* 2010-11-20: Update Gemspec dependencies (1.0.1)
+* 2010-11-19: Initial commit (1.0.0)
 
 ## Contributors
 
