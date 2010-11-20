@@ -13,12 +13,12 @@ rescue Bundler::GemNotFound => e
 end if File.exist?(gemfile)
 
 current = File.dirname(__FILE__)
-lib     = File.expand_path(File.join(current, 'lib'))
-$LOAD_PATH << current << lib
+currency_updater     = File.expand_path(File.join(current, 'lib', 'currency_updater'))
+$LOAD_PATH << current << currency_updater
 
 require 'iso_country_codes'
-require 'currency'
-require 'currencies'
-require 'currency_updater'
+require 'currency_updater/currency'
+require 'currency_updater/currencies'
+require 'currency_updater/updater'
 require 'yajl/json_gem'
 require 'builder'
