@@ -3,7 +3,8 @@ source :rubygems
 gem "i18n"
 gem "iso_country_codes"
 gem "yajl-ruby"
-gem "builder"
+gem "builder",    "~> 2.1.2"
+gem "actionpack", "~> 3.0.3"
 
 group :test, :development do
   gem "rspec"

@@ -2,8 +2,9 @@ module CurrencyUpdater
 
   class Currencies
     # EUR is unsupported because it's our reference currency
-    # the other currencies are not supported
-    UNSUPPORTED = %w(EUR AFN ALL AMD AOA AZN BAM BIF BMD BSD BTN CDF CUP ETB FIM FKP GEL GNF GYD IMP JEP KGS KMF LRD LSL LYD MGA MMK MNT MRO MZN SBD SHP SOS STD TJS TMM TOP TVD VUV WST ZWD)
+    # TRY is unsupported because it's a method used in actionpack
+    # the other currencies are not supported because of google
+    UNSUPPORTED = %w(EUR TRY AFN ALL AMD AOA AZN BAM BIF BMD BSD BTN CDF CUP ETB FIM FKP GEL GNF GYD IMP JEP KGS KMF LRD LSL LYD MGA MMK MNT MRO MZN SBD SHP SOS STD TJS TMM TOP TVD VUV WST ZWD)
 
     @@currencies = {}
 

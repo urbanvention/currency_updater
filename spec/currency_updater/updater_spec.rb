@@ -55,7 +55,7 @@ module CurrencyUpdater
 
       it "should fetch all currencies defined by ISO 4217" do
         @codes.each do |code|
-          currency = @cu.send code.downcase
+          currency = @cu.send code.downcase rescue warn("code #{code} unsupported")
           currency.should_not be_nil
         end
       end
