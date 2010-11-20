@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = "currency_updater"
-  s.version = "1.0.1"
+  s.version = "1.0.3"
   s.require_paths = ["lib"]
   s.files = [ "Gemfile",
               "Gemfile.lock",
@@ -25,6 +25,9 @@ Gem::Specification.new do |s|
   s.date = "2010-11-20"
   s.authors = ["Jan Riethmayer"]
   s.rubygems_version = "1.3.6"
-  s.add_dependency("iso_country_codes","0.2.2")
+  s.add_dependency("iso_country_codes", "~> 0.2.2")
+  s.add_dependency("yajl-ruby","~> 0.7.8")
+  s.add_dependency("i18n",     "~> 0.4.2")
+  s.add_dependency("builder",     "~> 2.1.2")
+  s.add_dependency("actionpack", "~> 3.0.3")
 end
-
