@@ -23,14 +23,14 @@ You have to include the CurrencyUpdater module. Here is a silly example:
 
     class DollarTodayController < ApplicationController
       include CurrencyUpdater
-      def index
+     def index
         @currencies = Updater.new("USD")
       end
     end
 
 ### Fetching Currencies
 
-In order to fetch all currencies defined by ISO 4217:
+In order to fetch all currencies defined by ISO 4217 (*):
 
     currencies = Updater.new
 
@@ -61,6 +61,18 @@ You're able to convert the currencies into different formats:
 Have a look at the remote specs to get an idea how the output looks like:
 
     ruby remote_spec/remote_spec.rb
+
+## Unsupported currencies
+
+Some currency rates are not available today. You could try to update them anyhow.
+
+    # lib/currency_updater/currencies.rb
+    # class Currencies
+    # EUR is unsupported because it's our reference currency
+    # TRY is unsupported because it's a method used in actionpack
+    # the other currencies are not supported because of google
+    
+    UNSUPPORTED = %w(EUR TRY AFN ALL AMD AOA AZN BAM BIF BMD BSD BTN CDF CUP ETB FIM FKP GEL GNF GYD IMP JEP KGS KMF LRD LSL LYD MGA MMK MNT MRO MZN SBD SHP SOS STD TJS TMM TOP TVD VUV WST ZWD)
 
 ## Changelog
 
