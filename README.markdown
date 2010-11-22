@@ -7,6 +7,15 @@ The currency updater loads currency rates based on google search.
 All rates conversions are based on the Euro (EUR).
 This version doesn't use a database.
 
+You could interpret the currency updater as a missing part of the standalone money gem.
+
+If you use the `money` gem, then want to extend the `Money::Bank::VariableExchange`:
+
+[google_currency](https://github.com/RubyMoney/google_currency)
+[eu_central_bank](https://github.com/RubyMoney/eu_central_bank)
+
+The currency updater itself does one thing: it scrapes currencies.
+
 ## Installation
 
 Standalone:
@@ -84,6 +93,10 @@ In case you'd like to find the rates in another way, you can change the rate fin
     CurrencyUpdater.setup do |config|
       config.rate_finder = lambda {|currency| 1.2345 }
     end
+
+## TODOs
+
+* Maybe it would be a good Idea to provide a `currencies.to_exhange_bank` method :)
 
 ## Changelog
 
